@@ -1,4 +1,4 @@
-﻿using Zeira.Domain.Constants;
+using Zeira.Domain.Constants;
 using Zeira.Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -63,7 +63,13 @@ public class ApplicationDbContextInitialiser
         }
     }
 
-    public async Task TrySeedAsync()
+    /// <summary>
+        /// Ensures default identity roles and users are present and persists any resulting changes to the database context.
+        /// </summary>
+        /// <remarks>
+        /// Creates an "administrator" role and an "administrator@localhost" user with a predefined password if they do not already exist, and assigns the role to that user.
+        /// </remarks>
+        public async Task TrySeedAsync()
     {
         // Default roles
         var administratorRole = new IdentityRole(Roles.Administrator);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -9,7 +9,10 @@ namespace Zeira.Infrastructure.Migrations
     /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Creates the initial ASP.NET Core Identity schema for PostgreSQL, including tables for roles, users, role claims, user claims, user logins, user roles, and user tokens, plus their primary keys, foreign keys, cascade delete rules, and supporting indexes (including unique indexes on normalized role and user names).
+        /// </summary>
+        /// <param name="migrationBuilder">The MigrationBuilder used to define the tables, constraints, and indexes for this migration.</param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
