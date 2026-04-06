@@ -1,5 +1,3 @@
-﻿using Zeira.Domain.Entities;
-
 namespace Zeira.Application.Common.Models;
 
 public class LookupDto
@@ -10,10 +8,12 @@ public class LookupDto
 
     private class Mapping : Profile
     {
+        /// <summary>
+        /// Initializes the AutoMapper profile used to configure mappings for LookupDto.
+        /// </summary>
         public Mapping()
         {
-            CreateMap<TodoList, LookupDto>();
-            CreateMap<TodoItem, LookupDto>();
+         
         }
     }
 }

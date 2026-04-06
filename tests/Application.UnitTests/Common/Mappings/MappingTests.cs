@@ -2,9 +2,6 @@
 using AutoMapper;
 using Zeira.Application.Common.Interfaces;
 using Zeira.Application.Common.Models;
-using Zeira.Application.TodoItems.Queries.GetTodoItemsWithPagination;
-using Zeira.Application.TodoLists.Queries.GetTodos;
-using Zeira.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
@@ -35,12 +32,8 @@ public class MappingTests
         _configuration!.AssertConfigurationIsValid();
     }
 
-    [Test]
-    [TestCase(typeof(TodoList), typeof(TodoListDto))]
-    [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
-    [TestCase(typeof(TodoList), typeof(LookupDto))]
-    [TestCase(typeof(TodoItem), typeof(LookupDto))]
-    [TestCase(typeof(TodoItem), typeof(TodoItemBriefDto))]
+
+
     public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
     {
         var instance = GetInstanceOf(source);

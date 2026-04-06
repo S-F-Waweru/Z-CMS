@@ -1,5 +1,4 @@
-﻿using Zeira.Domain.Constants;
-using Zeira.Domain.Entities;
+using Zeira.Domain.Constants;
 using Zeira.Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -64,7 +63,13 @@ public class ApplicationDbContextInitialiser
         }
     }
 
-    public async Task TrySeedAsync()
+    /// <summary>
+        /// Ensures default identity roles and users are present and persists any resulting changes to the database context.
+        /// </summary>
+        /// <remarks>
+        /// Creates an "administrator" role and an "administrator@localhost" user with a predefined password if they do not already exist, and assigns the role to that user.
+        /// </remarks>
+        public async Task TrySeedAsync()
     {
         // Default roles
         var administratorRole = new IdentityRole(Roles.Administrator);
@@ -88,21 +93,8 @@ public class ApplicationDbContextInitialiser
 
         // Default data
         // Seed, if necessary
-        if (!_context.TodoLists.Any())
-        {
-            _context.TodoLists.Add(new TodoList
-            {
-                Title = "Todo List",
-                Items =
-                {
-                    new TodoItem { Title = "Make a todo list 📃" },
-                    new TodoItem { Title = "Check off the first item ✅" },
-                    new TodoItem { Title = "Realise you've already done two things on the list! 🤯"},
-                    new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
-                }
-            });
-
+      
             await _context.SaveChangesAsync();
         }
     }
-}
+
