@@ -1,6 +1,6 @@
 ﻿namespace Zeira.Domain.Entities;
 
-public class Contributions : BaseAuditableEntity
+public class Contribution : BaseAuditableEntity
 {
     public int MemberId {get; set;}
     public decimal Amount {get; set;}

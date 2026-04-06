@@ -12,7 +12,7 @@ public class Member : BaseAuditableEntity
     public DateOnly JoinDate {get; set;} 
     
     // Navigation
-        public ICollection<Contributions> Contributions {get; set;} =[];
+        public ICollection<Contribution> Contributions {get; set;} =[];
         public ICollection<MemberLoan> Loans {get; set;} =[];
         public ICollection<MeetingAttendee> MeetingAttendances {get; set;} =[];
 

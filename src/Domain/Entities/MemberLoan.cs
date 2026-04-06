@@ -2,7 +2,7 @@
 
 public class MemberLoan : BaseAuditableEntity
 {
-  public int MemberLoanId {get; set;}
+  public int MemberId {get; set;}
   public decimal Amount { get; set; }
   public decimal InterestRate { get; set; }
   public DateOnly? IssueDate { get; set; }
