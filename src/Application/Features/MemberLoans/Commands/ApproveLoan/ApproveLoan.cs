@@ -15,9 +15,6 @@ public class ApproveLoanCommandValidator : AbstractValidator<ApproveLoanCommand>
     /// Validator for <see cref="ApproveLoanCommand"/>; currently does not define any validation rules.
     /// </remarks>
     public ApproveLoanCommandValidator()
-        {
-        }
-    public ApproveLoanCommandValidator()
     {
     }
 }
