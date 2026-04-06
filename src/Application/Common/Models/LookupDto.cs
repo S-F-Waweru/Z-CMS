@@ -1,5 +1,4 @@
-﻿using Zeira.Domain.Entities;
-
+﻿
 namespace Zeira.Application.Common.Models;
 
 public class LookupDto
@@ -12,8 +11,7 @@ public class LookupDto
     {
         public Mapping()
         {
-            CreateMap<TodoList, LookupDto>();
-            CreateMap<TodoItem, LookupDto>();
+         
         }
     }
 }
