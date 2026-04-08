@@ -4,7 +4,7 @@ public class Member : BaseAuditableEntity
 {
     public string FullName{get; set;} = String.Empty;
     public string Email{get; set;} =  String.Empty;
-    public string PhonNumber{get; set;} = String.Empty;
+    public string PhoneNumber{get; set;} = String.Empty;
     
     public  MemberRole Role {get; set;} = MemberRole.Member;
     public MemberStatus Status {get; set;} = MemberStatus.Active;

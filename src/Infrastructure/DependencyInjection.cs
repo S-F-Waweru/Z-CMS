@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Zeira.Domain.Interfaces;
+using Zeira.Infrastructure.Data.Repositories;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -32,6 +34,7 @@ public static class DependencyInjection
 
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
+        builder.Services.AddScoped<IMemberRepository, MemberRepository>();
         builder.Services.AddScoped<ApplicationDbContextInitialiser>();
 
         builder.Services.AddAuthentication(options =>

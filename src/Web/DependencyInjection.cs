@@ -11,6 +11,8 @@ public static class DependencyInjection
     public static void AddWebServices(this IHostApplicationBuilder builder)
     {
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+        
+        builder.Services.AddControllers();
 
         builder.Services.AddScoped<IUser, CurrentUser>();
 

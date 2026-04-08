@@ -41,6 +41,11 @@ app.UseExceptionHandler(options => { });
 app.MapDefaultEndpoints();
 app.MapEndpoints(typeof(Program).Assembly);
 
+
+
+app.MapControllers();
+
+
 app.UseFileServer();
 
 app.Run();

@@ -1,40 +1,33 @@
 using Zeira.Application.Common.Interfaces;
+using Zeira.Domain.Interfaces;
 
 namespace Zeira.Application.Members.Commands.DeleteMember;
 
-public record DeleteMemberCommand : IRequest<bool>
-{
-}
+public record DeleteMemberCommand(int MemberId) : IRequest<bool>;
 
 public class DeleteMemberCommandValidator : AbstractValidator<DeleteMemberCommand>
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DeleteMemberCommandValidator"/> class.
-    /// </summary>
     public DeleteMemberCommandValidator()
     {
+        RuleFor(m => m.MemberId).GreaterThan(0);
     }
 }
 
 public class DeleteMemberCommandHandler : IRequestHandler<DeleteMemberCommand, bool>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IMemberRepository _repository;
 
-    /// <summary>
-    /// Initializes a new instance of <see cref="DeleteMemberCommandHandler"/> that uses the provided application database context.
-    /// </summary>
-    public DeleteMemberCommandHandler(IApplicationDbContext context)
+    public DeleteMemberCommandHandler(IMemberRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
-    /// <summary>
-    /// Deletes the member described by the command and indicates whether the deletion succeeded.
-    /// </summary>
-    /// <param name="request">The command containing the details required to delete the member.</param>
-    /// <returns>`true` if the member was deleted; `false` otherwise.</returns>
     public async Task<bool> Handle(DeleteMemberCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var member = await _repository.GetByIdAsync(request.MemberId, cancellationToken);
+        if (member is null) return false;
+
+        await _repository.DeleteAsync(member, cancellationToken);
+        return true;
     }
 }

@@ -1,46 +1,55 @@
 using Zeira.Application.Common.Interfaces;
+using Zeira.Domain.Enums;
+using Zeira.Domain.Interfaces;
 
-namespace Zeira.Application.Members.Commands.UpdateMember;
-
-public record UpdateMemberCommand : IRequest<bool>
-{
-}
+public record UpdateMemberCommand(
+    int Id,
+    string FullName,
+    string Email,
+    string PhoneNumber,
+    MemberRole Role,
+    MemberStatus Status,
+    DateOnly JoinDate
+) : IRequest<bool>;
 
 public class UpdateMemberCommandValidator : AbstractValidator<UpdateMemberCommand>
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="UpdateMemberCommandValidator"/> class.
-    /// </summary>
-    /// <remarks>
-    /// No validation rules are configured currently.
-    /// </remarks>
     public UpdateMemberCommandValidator()
     {
+        
+        RuleFor(x => x.Id).GreaterThan(0);
+
+        RuleFor(x => x.FullName).NotEmpty().MaximumLength(150);
+        RuleFor(x => x.Email).NotEmpty().EmailAddress().MaximumLength(150);
+        RuleFor(x => x.PhoneNumber).NotEmpty().MaximumLength(20);
+        RuleFor(x => x.Role).IsInEnum();
+        RuleFor(x => x.Status).IsInEnum();
+        RuleFor(x => x.JoinDate).NotEmpty().LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today));
     }
 }
 
-public class UpdateMemberCommandHandler : IRequestHandler<UpdateMemberCommand, bool>
+public class UpdateMemberHandler : IRequestHandler<UpdateMemberCommand, bool>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly IMemberRepository _repository;
 
-    /// <summary>
-    /// Initializes a new instance of <see cref="UpdateMemberCommandHandler"/> with the given application database context.
-    /// </summary>
-    /// <param name="context">The application database context used to access and persist member data.</param>
-    public UpdateMemberCommandHandler(IApplicationDbContext context)
+    public UpdateMemberHandler(IMemberRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
-    /// <summary>
-    /// Processes an UpdateMemberCommand to update a member's information in the application data store.
-    /// </summary>
-    /// <param name="request">The command containing the update request for a member.</param>
-    /// <param name="cancellationToken">Token to observe while waiting for the operation to complete.</param>
-    /// <returns>`true` if the member was updated, `false` otherwise.</returns>
-    /// <exception cref="System.NotImplementedException">Thrown until the handler implementation is provided.</exception>
     public async Task<bool> Handle(UpdateMemberCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var member = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        if (member is null) return false;
+
+        member.FullName = request.FullName;
+        member.Email = request.Email;
+        member.PhoneNumber = request.PhoneNumber;
+        member.Role = request.Role;
+        member.Status = request.Status;
+        member.JoinDate = request.JoinDate;
+
+        await _repository.UpdateAsync(member, cancellationToken);
+        return true;
     }
 }
